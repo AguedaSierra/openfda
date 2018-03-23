@@ -4,7 +4,7 @@ import json
 headers = {'User-Agent': 'http-client'}
 
 conn = http.client.HTTPSConnection("api.fda.gov")
-conn.request('GET', '/drug/label.json?search=results.indications_and_usage:id&limit=1', None, headers)
+conn.request('GET', '/drug/label.json?&limit=1', None, headers)
 r1 = conn.getresponse()
 print(r1)
 for elem in r1:
