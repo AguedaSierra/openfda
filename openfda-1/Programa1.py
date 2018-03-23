@@ -6,10 +6,10 @@ headers = {'User-Agent': 'http-client'}
 conn = http.client.HTTPSConnection("api.fda.gov")
 conn.request('GET', '/drug/label.json?&limit=1', None, headers)
 r1 = conn.getresponse()
-repos_raw = r1.read().decode("utf-8")
+r2 = r1.read().decode("utf-8")
 conn.close()
-repos = json.loads(repos_raw)
+data = json.loads(r2)
 
-for elem in repos["results"]:
+for elem in data["results"]:
     print(elem["id"])
 
