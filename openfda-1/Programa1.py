@@ -11,5 +11,7 @@ conn.close()
 data = json.loads(r2)
 
 for elem in data["results"]:
-    print(elem["id"])
+    print("El identificador es:", elem["id"])
+    print("El propósito es:", elem["purpose"])
+    print("El nombre del fabricante es:", elem["openfda"]["manufacturer_name"])
 
