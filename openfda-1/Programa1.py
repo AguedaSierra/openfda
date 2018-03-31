@@ -12,6 +12,6 @@ data = json.loads(r2)
 
 for elem in data["results"]:
     print("El identificador es:", elem["id"])
-    print("El propósito es:", elem["purpose"])
-    print("El nombre del fabricante es:", elem["openfda"]["manufacturer_name"])
+    print("El propósito es:", str(elem["purpose"])[2:-2])
+    print("El nombre del fabricante es:", str(elem["openfda"]["manufacturer_name"])[2:-2])
 
