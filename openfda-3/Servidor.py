@@ -21,12 +21,11 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         data1 = []
         for elem in data["results"]:
             if "brand_name" in elem["openfda"]:
-                data1.append(str(elem["openfda"]["brand_name"]))
-        mensaje = " ".join(data1)
-        print("Datos en servidor {}".format(mensaje))
+                data1.append(str(elem["openfda"]["brand_name"])[2:-2])
+        print("Datos en servidor {}".format(data1))
         f = open('medicamentos.html', 'w')
         message = """<html>\n\t<head>\n\t\tNombres de medicamentos\n\t</head>\n\t<body>\n"""
-        message += "\t\t<p>{}</p>\n".format(mensaje)
+        message += "\t\t<p>{}</p>\n".format(data1)
         message += "\t</body>\n</html>"
         f.write(message)
         f.close()
