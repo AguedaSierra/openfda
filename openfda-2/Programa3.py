@@ -4,7 +4,7 @@ import json
 headers = {'User-Agent': 'http-client'}
 
 conn = http.client.HTTPSConnection("api.fda.gov")
-conn.request('GET', '/drug/label.json?search=results.openfda.generic_name="salicylic%20acid"&limit=100', None, headers)
+conn.request('GET', '/drug/label.json?search=results.openfda.generic_name="acetylsalicylic%20acid"&limit=100', None, headers)
 r1 = conn.getresponse()
 r2 = r1.read().decode("utf-8")
 conn.close()
