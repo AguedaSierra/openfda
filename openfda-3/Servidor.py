@@ -55,8 +55,7 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
 
     # Entrar en el bucle principal
     # Las peticiones se atienden desde nuestro manejador
-    # Cada vez que se ocurra un "GET" se invoca al metodo do_GET de
-    # nuestro manejador
+    # Cada vez que se ocurra un "GET" se invoca al metodo do_GET de nuestro manejador
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

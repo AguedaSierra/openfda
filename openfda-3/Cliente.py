@@ -8,4 +8,4 @@ conn.request("GET", "/") #Envia un mensaje de solicitud con un GET
 r1 = conn.getresponse() #Lee el mensaje de respuesta que ha recibido del servidor
 print(r1.status, r1.reason) #Se imprime el estado de la respuesta
 data1 = r1.read().decode("utf-8") #Se lee el contenido de la respuesta y se convierte a una cadena
-print(data1) #Se imprime el fichero html recibido
+print(data1) #Se imprime el fichero html que ha recibido
