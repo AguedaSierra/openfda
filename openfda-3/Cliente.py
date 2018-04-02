@@ -1,23 +1,11 @@
-# -- Ejemplo de cliente web que usa la biblioteca http.client
 import http.client
 
 PORT = 8000
 headers=('Content-type', 'text/html')
 
-# Conectarse con el servidor
-conn = http.client.HTTPConnection('localhost', PORT)
-
-# -- Enviar un mensaje de solicitud (Verbo: GET), Recurso: Raiz
-conn.request("GET", "/")
-
-# -- Leer el mensaje de respuesta recibido del servidor
-r1 = conn.getresponse()
-
-# -- Imprimir la linea de estado de la respuesta
-print(r1.status, r1.reason)
-
-# -- Leer el contenido de la respuesta y converirlo a una cadena
-data1 = r1.read().decode("utf-8")
-
-# -- Imprimir el fichero html recibido
-print(data1)
+conn = http.client.HTTPConnection('localhost', PORT) #El programa se conecta con el servidor
+conn.request("GET", "/") #Envia un mensaje de solicitud con un GET
+r1 = conn.getresponse() #Lee el mensaje de respuesta que ha recibido del servidor
+print(r1.status, r1.reason) #Se imprime el estado de la respuesta
+data1 = r1.read().decode("utf-8") #Se lee el contenido de la respuesta y se convierte a una cadena
+print(data1) #Se imprime el fichero html recibido
