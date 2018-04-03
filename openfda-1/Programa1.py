@@ -5,7 +5,7 @@ headers = {'User-Agent': 'http-client'}
 
 conn = http.client.HTTPSConnection("api.fda.gov") #El programa se conecta con la página de la api fda
 conn.request('GET', '/drug/label.json?&limit=1', None, headers) #Con un GET pide la información de la etiqueta
-# de un (limit=1) medicamento en un fichero json
+# de un medicamento (limit=1) en un fichero json
 r1 = conn.getresponse()
 r2 = r1.read().decode("utf-8") #Lee la respuesta y la decodifica en formato utf-8
 conn.close()
