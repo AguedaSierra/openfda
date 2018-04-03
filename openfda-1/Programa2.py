@@ -12,7 +12,7 @@ conn.close()
 data = json.loads(r2) #La respuesta en código utf-8 se convierte en un diccionario para que sea más
 #fácil de trabajar en Python
 
-a = 0 #Se inicializa una variable para ir contando el número de medicamentos
+a = 0 #Se inicializa una variable para ir numerando los medicamentos
 for elem in data["results"]: #Se itera sobre los elementos que tienen como clave "results"
     #Dentro de esos valores hay más diccionarios
     a = a + 1
