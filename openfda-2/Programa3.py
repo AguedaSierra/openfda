@@ -5,7 +5,7 @@ headers = {'User-Agent': 'http-client'}
 
 conn = http.client.HTTPSConnection("api.fda.gov") #El programa se conecta con la página de la api fda
 conn.request('GET', '/drug/label.json?search=results.openfda.generic_name="acetylsalicylic%20acid"&limit=100', None, headers)
-#Con un GET pide la información de la etiqueta de todos (limit=100, límite máximo) los medicamentos que
+#Con un GET pide la información de la etiqueta de todos los medicamentos (limit=100, límite máximo) que
 #contengan "acetylsalicylic acid" en el nombre genérico. Se guarda en un fichero json
 r1 = conn.getresponse()
 r2 = r1.read().decode("utf-8") #Lee la respuesta y la decodifica en formato utf-8
@@ -19,7 +19,7 @@ for elem in data["results"]: #Se itera sobre los elementos que tienen como clave
         manufacturer.append(str(elem["openfda"]["manufacturer_name"])[2:-2]) #Se añade el nombre a la lista
         #sin comillas ni corchetes ([2:-2])
 
-a = 0 #Se inicializa una variable para ir contando el número de fabricantes
+a = 0 #Se inicializa una variable para ir numerando los fabricantes
 for name in set(manufacturer): #Con el set se cogen los nombres no repetidos
     a = a+1
     print("Fabricante nº", a, ":", name, "\n", end=" ")
