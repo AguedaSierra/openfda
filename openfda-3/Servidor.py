@@ -20,23 +20,27 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler): #Se define la 
         conn.close() #Se cierra la conexión
         data = json.loads(r2) #La respuesta en código utf-8 se convierte en un diccionario para que sea más
         #fácil de trabajar en Python
-        data1 = [] #Se crea una lista vacía para ir añadiendo el nombre de los fabricantes
-        for elem in data["results"]: #Se itera sobre los elementos que tienen como clave "results"
-        #Dentro de esos valores hay más diccionarios
-            if "brand_name" in elem["openfda"]: #Si el medicamento tiene el nombre del fabricante
-                data1.append(str(elem["openfda"]["brand_name"])[2:-2]) #Se añade el nombre a la lista
-                #sin las comillas ni los corchetes
 
-        f = open('medicamentos.html', 'w') #Se abre el fichero "medicamentos.html" para guardar los datos
-        datos = """<html>\n\t<head>\n\t\tNombres de medicamentos\n\t</head>\n\t<body>\n"""
-        datos += "\t\t<p>{}</p>\n".format(data1)
-        datos += "\t</body>\n</html>"
-        f.write(datos)
-        f.close()
+        def crear_fichero(self):
+            data1 = "" #Se crea una variable vacía
+            for elem in data["results"]: #Se itera sobre los elementos que tienen como clave "results"
+            #Dentro de esos valores hay más diccionarios
+                if "brand_name" in elem["openfda"]: #Si el medicamento tiene el nombre del fabricante
+                    data1 += (str(elem["openfda"]["brand_name"])[2:-2]) #Se añade el nombre a la variable
+                    # sin comillas ni corchetes ([2:-2]) y además separados por comas
+                    data1 += ", "
+
+            f = open('medicamentos.html', 'w') #Se abre el fichero "medicamentos.html" para guardar los datos
+            datos = """<html>\n\t<head>\n\t\tNombres de medicamentos:\n\t</head>\n\t<body>\n"""
+            datos += "\t\t<p>{}</p>\n".format(data1)
+            datos += "\t</body>\n</html>"
+            f.write(datos)
+            f.close()
 
         if self.path == "/" or self.path == "/medicamentos": #Si el parámetro del GET es "/" o "/medicamentos"
-            with open("medicamentos.html", "r") as f: #Se abre el fichero anterior
-                message = f.read() #y el mensaje que se manda es el contenido del fichero
+            crear_fichero(self) #Se llama a la función para que se cree el fichero
+            with open("medicamentos.html", "r") as f: #Se abre ese fichero
+                message = f.read() #y el mensaje que se manda es su contenido
         else:
             message = "Error" #Si no el mensaje es error
 
