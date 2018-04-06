@@ -18,5 +18,4 @@ for elem in data["results"]: #Se itera sobre los elementos que tienen como clave
     print("El propósito es:", str(elem["purpose"])[2:-2]) #Se obtiene el valor cuya clave es "purpose"
     print("El nombre del fabricante es:", str(elem["openfda"]["manufacturer_name"])[2:-2]) #Se obtiene el valor
     #cuya clave es "manufacturer_name" que está dentro de la clve "openfda"
-    # Con [2:-2] se coge el valor sin los corchetes ni las comillas 8después de convertirlo a string)
-
+    # Con [2:-2] se coge el valor sin los corchetes ni las comillas después de convertirlo a string)
