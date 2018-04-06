@@ -21,24 +21,30 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler): #Se define la 
         data = json.loads(r2) #La respuesta en código utf-8 se convierte en un diccionario para que sea más
         #fácil de trabajar en Python
 
-        data1 = "" #Se crea una variable vacía
+        contenido = """
+              <!doctype html>
+              <html>
+              <body style='background-color: lavender'>
+                <h1>Nombres de medicamentos:</h2>
+              </body>
+              </html>
+            """
+
         for elem in data["results"]: #Se itera sobre los elementos que tienen como clave "results"
         #Dentro de esos valores hay más diccionarios
+            contenido += "El nombre del fabricante del medicamento con id: "
+            contenido += elem["id"]
+            contenido += " es: "
             if "brand_name" in elem["openfda"]: #Si el medicamento tiene el nombre del fabricante
-                data1 += (str(elem["openfda"]["brand_name"])[2:-2]) #Se añade el nombre a la variable
+                contenido += (str(elem["openfda"]["brand_name"]).lower()[2:-2]) #Se añade el nombre a la variable
                 # sin comillas ni corchetes ([2:-2]) y además separados por comas
-                data1 += ", "
-
-        f = open('medicamentos.html', 'w') #Se abre el fichero "medicamentos.html" para guardar los datos
-        datos = """<html>\n\t<head>\n\t\tNombres de medicamentos:\n\t</head>\n\t<body>\n"""
-        datos += "\t\t<p>{}</p>\n".format(data1)
-        datos += "\t</body>\n</html>"
-        f.write(datos)
-        f.close()
+                contenido += "</br></body></html>"
+            else:
+                contenido += "no hay registros"
+                contenido += "</br></body></html>"
 
         if self.path == "/" or self.path == "/medicamentos": #Si el parámetro del GET es "/" o "/medicamentos"
-            with open("medicamentos.html", "r") as f: #Se abre ese fichero
-                message = f.read() #y el mensaje que se manda es su contenido
+            message = contenido #y el mensaje que se manda es su contenido
         else:
             message = "Error" #Si no el mensaje es error
 
