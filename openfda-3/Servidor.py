@@ -21,45 +21,43 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler): #Se define la 
         data = json.loads(r2) #La respuesta en código utf-8 se convierte en un diccionario para que sea más
         #fácil de trabajar en Python
 
-        def crear_fichero(self):
-            data1 = "" #Se crea una variable vacía
-            for elem in data["results"]: #Se itera sobre los elementos que tienen como clave "results"
-            #Dentro de esos valores hay más diccionarios
-                if "brand_name" in elem["openfda"]: #Si el medicamento tiene el nombre del fabricante
-                    data1 += (str(elem["openfda"]["brand_name"])[2:-2]) #Se añade el nombre a la variable
-                    # sin comillas ni corchetes ([2:-2]) y además separados por comas
-                    data1 += ", "
+        data1 = "" #Se crea una variable vacía
+        for elem in data["results"]: #Se itera sobre los elementos que tienen como clave "results"
+        #Dentro de esos valores hay más diccionarios
+            if "brand_name" in elem["openfda"]: #Si el medicamento tiene el nombre del fabricante
+                data1 += (str(elem["openfda"]["brand_name"])[2:-2]) #Se añade el nombre a la variable
+                # sin comillas ni corchetes ([2:-2]) y además separados por comas
+                data1 += ", "
 
-            f = open('medicamentos.html', 'w') #Se abre el fichero "medicamentos.html" para guardar los datos
-            datos = """<html>\n\t<head>\n\t\tNombres de medicamentos:\n\t</head>\n\t<body>\n"""
-            datos += "\t\t<p>{}</p>\n".format(data1)
-            datos += "\t</body>\n</html>"
-            f.write(datos)
-            f.close()
+        f = open('medicamentos.html', 'w') #Se abre el fichero "medicamentos.html" para guardar los datos
+        datos = """<html>\n\t<head>\n\t\tNombres de medicamentos:\n\t</head>\n\t<body>\n"""
+        datos += "\t\t<p>{}</p>\n".format(data1)
+        datos += "\t</body>\n</html>"
+        f.write(datos)
+        f.close()
 
         if self.path == "/" or self.path == "/medicamentos": #Si el parámetro del GET es "/" o "/medicamentos"
-            crear_fichero(self) #Se llama a la función para que se cree el fichero
             with open("medicamentos.html", "r") as f: #Se abre ese fichero
                 message = f.read() #y el mensaje que se manda es su contenido
         else:
             message = "Error" #Si no el mensaje es error
 
-        # Enviar el mensaje completo
+        #Se envía el mensaje completo
         self.wfile.write(bytes(message, "utf8"))
         print("File served!")
         return
 
-# El servidor comienza a aquí
+#El servidor comienza a aquí
 #Se establece como manejador la clase definida anteriormente
 Handler = testHTTPRequestHandler
 
-# Configurar el socket del servidor, para esperar conexiones de clientes
+#Se configura el socket del servidor, para esperar conexiones de clientes
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
     print("serving at port", PORT)
 
-    # Entrar en el bucle principal
-    # Las peticiones se atienden desde nuestro manejador
-    # Cada vez que se ocurra un "GET" se invoca al metodo do_GET de nuestro manejador
+    #Entrar en el bucle principal
+    #Las peticiones se atienden desde el manejador
+    #Cada vez que se ocurra un "GET" se invoca al metodo do_GET del manejador
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
