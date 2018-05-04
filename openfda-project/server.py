@@ -7,11 +7,21 @@ app = Flask(__name__)
 
 @app.route("/searchDrug")
 def get_ingredient():
-    nombre = request.args.get('active_ingredient')
-    act_ing = nombre
-    act_ing = act_ing.replace(" ", "%20")
-    datos = ""
-    temp = '/drug/label.json?search=active_ingredient:"' + act_ing + '"&limit=100'
+    nombre = request.args.get('active_ingredient').replace(" ", "%20")
+    #act_ing = nombre
+    #act_ing = act_ing.replace(" ", "%20")
+    datos =  """
+              <!doctype html>
+              <html>
+              <head>
+              <title>Título<title>
+              </head>
+              <body>
+              <h1>Nombres de medicamentos:</h1>
+              <p>
+            """
+
+    temp = '/drug/label.json?search=active_ingredient:"' + nombre + '"&limit=10'
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
     conn.request('GET', temp, None, headers)
@@ -31,6 +41,14 @@ def get_ingredient():
 
     else:
         datos = "nada"
+
+    datos += """
+            </p>
+            </body>
+            </html>
+            """
+
+    print(datos)
     return "<ul>{}</ul>".format(datos)
 
 @app.route("/searchCompany")
@@ -39,7 +57,7 @@ def get_company():
     emp = empresa
     emp = emp.replace(" ", "%20")
     datos = ""
-    temp = '/drug/label.json?search=manufacturer_name:"' + emp + '"&limit=100'
+    temp = '/drug/label.json?search=manufacturer_name:"' + emp + '"&limit=10'
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
     conn.request('GET', temp, None, headers)
@@ -193,4 +211,4 @@ def do_get():
     return message
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=8000)
