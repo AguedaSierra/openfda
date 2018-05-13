@@ -13,8 +13,10 @@ class OpenFDAClient(): #Incluye la lógica para comunicarse con la API de OpenFD
         self.enlace = enlace
     def fda_connection(self, enlace):
         headers = {'User-Agent': 'http-client'}
+        #conn = http.client.HTTPSConnection("api.fda.gov")
         conn.request('GET', enlace, None, headers)
         r1 = conn.getresponse()
+        #conn.close()
         return r1
 
 class OpenFDAParser(): #Lógica para obtener los datos de los medicamentos
@@ -250,9 +252,14 @@ def do_get():
     return message
 
 
+#@app.errorhandler(404)
+#def page_not_found():
+    #return 'This page does not exist', 404
+
 @app.route('/secret')
 def no_autorizado():
     content = 'WWW-Authenticate'
+    #content = requests.get('http://localhost:8000/secret', auth=HTTPBasicAuth('user', 'pass'))
     return content, status.HTTP_401_UNAUTHORIZED  #, {'WWWAuthenticate':'Basic realm="Login Required"'}
 
 @app.route('/redirect')
