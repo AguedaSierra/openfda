@@ -8,18 +8,16 @@ app = Flask(__name__)
 
 conn = http.client.HTTPSConnection("api.fda.gov")
 
-class OpenFDAClient(): #Incluye la lógica para comunicarse con la API de OpenFDA
+class OpenFDAClient(): # Clase que incluye la lógica para comunicarse con la API de OpenFDA
     def __init__(self, enlace=""):
         self.enlace = enlace
     def fda_connection(self, enlace):
         headers = {'User-Agent': 'http-client'}
-        #conn = http.client.HTTPSConnection("api.fda.gov")
         conn.request('GET', enlace, None, headers)
         r1 = conn.getresponse()
-        #conn.close()
         return r1
 
-class OpenFDAParser(): #Lógica para obtener los datos de los medicamentos
+class OpenFDAParser(): #Clase que incluye la lógica para obtener los datos de los medicamentos
     def __init__(self, r1=""):
         self.r1 = r1
     def get_data(self):
@@ -28,12 +26,9 @@ class OpenFDAParser(): #Lógica para obtener los datos de los medicamentos
         data = json.loads(r2)
         return data
 
-class OpenFDAHTML(): #Generación del HTML para la visualización de la información
-    def __init__(self, datos=""" """):
-        #Inicializamos los datos
+class OpenFDAHTML(): # Clase que genera el HTML para la visualización de la información
+    def __init__(self, datos=""" """): # Se inicializan los datos
         self.datos = datos
-
-
     def convert_into_html(self, clave, subclave):
         if clave == "warnings":
             encabezado = "Warnings de los medicamentos:"
@@ -176,7 +171,7 @@ def do_get():
                   <input type="submit" value="Submit">
                 </form> 
 
-                <p>If you click the "Submit" button, the form-data will be sent to a page called "/searchDrug".</p>
+                <p>Si clica en el botón "Submit", irá a la página "/searchDrug".</p>
 
                 </body>
                 </html>"""
@@ -193,7 +188,7 @@ def do_get():
                   <input type="submit" value="Submit">
                 </form> 
 
-                <p>If you click the "Submit" button, the form-data will be sent to a page called "/searchCompany".</p>
+                <p>Si clica en el botón "Submit", irá a la página "/searchCompany".</p>
 
                 </body>
                 </html>"""
@@ -210,7 +205,7 @@ def do_get():
                   <input type="submit" value="Submit">
                 </form> 
 
-                <p>If you click the "Submit" button, the form-data will be sent to a page called "/listDrugs".</p>
+                <p>Si clica en el botón "Submit", irá a la página "/listDrugs".</p>
 
                 </body>
                 </html>"""
@@ -227,7 +222,7 @@ def do_get():
                   <input type="submit" value="Submit">
                 </form> 
 
-                <p>If you click the "Submit" button, the form-data will be sent to a page called "/listCompanies".</p>
+                <p>Si clica en el botón "Submit", irá a la página "/listCompanies".</p>
 
                 </body>
                 </html>"""
@@ -245,22 +240,16 @@ def do_get():
                         <input type="submit" value="Submit">
                       </form> 
 
-                      <p>If you click the "Submit" button, the form-data will be sent to a page called "/listWarnings".</p>
+                      <p>Si clica en el botón "Submit", irá a la página "/listWarnings".</p>
 
                       </body>
                       </html>"""
     return message
 
-
-#@app.errorhandler(404)
-#def page_not_found():
-    #return 'This page does not exist', 404
-
 @app.route('/secret')
 def no_autorizado():
     content = 'WWW-Authenticate'
-    #content = requests.get('http://localhost:8000/secret', auth=HTTPBasicAuth('user', 'pass'))
-    return content, status.HTTP_401_UNAUTHORIZED  #, {'WWWAuthenticate':'Basic realm="Login Required"'}
+    return content, status.HTTP_401_UNAUTHORIZED #, {'WWWAuthenticate':'Basic realm="Login Required"'}
 
 @app.route('/redirect')
 def root():
