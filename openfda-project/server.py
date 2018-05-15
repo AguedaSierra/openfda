@@ -96,12 +96,16 @@ class OpenFDAHTML(): # Clase que genera el HTML para la visualización de la inf
 def get_ingredient():
    # Se obtiene de la URL el parámetro "active_ingredient"
    nombre = request.args.get('active_ingredient')
+   num = request.args.get('limit')
+   if num == None: # Si no se pone el parámetro "limit" se toma como 10
+       num = "10"
+
    act_ing = nombre
    act_ing = act_ing.replace(" ", "%20")
 
    # Se establece la conexión con OpenFDA usando la clase OpenFDAClient definida anteriormente
    direccion = OpenFDAClient()
-   respuesta = direccion.fda_connection('/drug/label.json?search=active_ingredient:"' + act_ing + '"&limit=10')
+   respuesta = direccion.fda_connection('/drug/label.json?search=active_ingredient:"' + act_ing + '"&limit=' + num)
 
    # Se obtienen los datos de OpenFDA usando la clase OpenFDAParser definida anteriormente
    data1 = OpenFDAParser(respuesta)
@@ -118,11 +122,14 @@ def get_ingredient():
 @app.route("/searchCompany")
 def get_company():
     empresa = request.args.get('company')
+    num = request.args.get('limit')
+    if num == None:
+        num = "10"
     emp = empresa
     emp = emp.replace(" ", "%20")
 
     direccion = OpenFDAClient()
-    respuesta = direccion.fda_connection('/drug/label.json?search=manufacturer_name:"' + emp + '"&limit=10')
+    respuesta = direccion.fda_connection('/drug/label.json?search=manufacturer_name:"' + emp + '"&limit=' + num)
 
     data1 = OpenFDAParser(respuesta)
     data = data1.get_data()
