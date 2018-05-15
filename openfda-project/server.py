@@ -101,6 +101,7 @@ def get_ingredient():
        num = "10"
 
    act_ing = nombre
+   # En caso de que en el nombre haya un espacio se sustituye por "%20" para evitar errores
    act_ing = act_ing.replace(" ", "%20")
 
    # Se establece la conexión con OpenFDA usando la clase OpenFDAClient definida anteriormente
