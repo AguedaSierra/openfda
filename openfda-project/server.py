@@ -274,7 +274,7 @@ def root():
     return redirect('http://localhost:8000/', code=302)
 
 # No es necesario implementar código para el error 404 (Not found) porque flask lo hace automáticamente
-# cuando no es una de las rutas definidas a través de un @app.route()
+# cuando no es una de las rutas definidas mediante un @app.route()
 
 if __name__ == "__main__":
     app.run(port=8000)
