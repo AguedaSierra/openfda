@@ -62,7 +62,7 @@ class OpenFDAHTML(): # Clase que genera el HTML para la visualización de la inf
         if "results" in self.datos:
             for elem in self.datos["results"]:
                 if subclave != "": # clave = "openfda" y subclave es "brand_name" o "manufacturer_name"
-                    if subclave in elem[clave]: #
+                    if subclave in elem[clave]: 
                         info += "<li>"
                         info += (str(elem[clave][subclave]).lower()[2:-2]) # Se eliminan los corchetes
                         info += "</li>"
